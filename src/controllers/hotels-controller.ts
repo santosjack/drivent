@@ -3,14 +3,27 @@ import { CreateHotelParams } from "@/services/hotels-service";
 import hotelService from "@/services/hotels-service";
 import { Request, Response } from "express";
 import httpStatus from "http-status";
+import { ApplicationError } from "@/protocols";
 
 export async function getHotels(req: AuthenticatedRequest, res: Response) {
   try {
-    const hotels = await hotelService.getHotels();
+    const hotels = await hotelService.getHotels(req.userId);
 
     return res.status(httpStatus.OK).send(hotels);
   } catch (error) {
-    return res.sendStatus(httpStatus.NO_CONTENT);
+    const err = error as ApplicationError;
+    console.log(err);
+    if(err.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND).send({
+        message: err.message
+      });
+    }
+    if(err.name === "PaymentRequiredError") {
+      return res.sendStatus(httpStatus.PAYMENT_REQUIRED).send({
+        message: err.message
+      });
+    }
+    return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
 
@@ -18,11 +31,23 @@ export async function getHotelRooms(req: AuthenticatedRequest, res: Response) {
   const hotelId = parseInt(req.params.hotelId);
 
   try {
-    const rooms = await hotelService.getHotelRooms(hotelId);
-
+    const rooms = await hotelService.getHotelRooms(hotelId, req.userId);
     return res.status(httpStatus.OK).send(rooms);
   } catch (error) {
-    return res.sendStatus(httpStatus.NOT_FOUND);
+    const err = error as ApplicationError;
+    console.log(err);
+    if(err.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND).send({
+        message: err.message
+      });
+    }
+    if(err.name === "PaymentRequiredError") {
+      return res.sendStatus(httpStatus.PAYMENT_REQUIRED).send({
+        message: err.message
+      });
+    }
+
+    return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
 

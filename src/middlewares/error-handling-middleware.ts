@@ -33,10 +33,16 @@ export function handleApplicationErrors(err: ApplicationError | Error, _req: Req
     });
   }
 
+  if(err.name === "PaymentRequiredError") {
+    return res.status(httpStatus.PAYMENT_REQUIRED).send({
+      message: err.message,
+    });
+  }
+
   /* eslint-disable-next-line no-console */
   console.error(err.name);
-  res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR).send({
+  res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
     error: "InternalServerError",
-    message: "Internal Server Error",
+    message: "Internal Server Error", 
   });
 }
