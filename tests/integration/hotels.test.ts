@@ -206,7 +206,7 @@ describe("GET /hotels/:id", () => {
     const hotel = await prisma.hotel.findFirst({});
     await populateHotelRooms(hotel.id);
     const response = await server.get(`/hotels/${hotel.id}`);
-    console.log(hotel.id);
+   
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
 
@@ -267,7 +267,6 @@ describe("GET /hotels/:id", () => {
       const hotel = await prisma.hotel.findFirst({});
       await populateHotelRooms(hotel.id);
       
-      console.log(hotel.id);
       const user = await createUser();
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
@@ -341,7 +340,6 @@ describe("GET /hotels/:id", () => {
       const response = await server.get(`/hotels/${hotel.id}`).set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(httpStatus.OK);
-      console.log(response.body);
       expect(response.body).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
