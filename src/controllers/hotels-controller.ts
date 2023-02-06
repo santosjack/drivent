@@ -12,7 +12,6 @@ export async function getHotels(req: AuthenticatedRequest, res: Response) {
     return res.status(httpStatus.OK).send(hotels);
   } catch (error) {
     const err = error as ApplicationError;
-    console.log(err);
     if(err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND).send({
         message: err.message
@@ -35,7 +34,6 @@ export async function getHotelRooms(req: AuthenticatedRequest, res: Response) {
     return res.status(httpStatus.OK).send(rooms);
   } catch (error) {
     const err = error as ApplicationError;
-    console.log(err);
     if(err.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND).send({
         message: err.message
