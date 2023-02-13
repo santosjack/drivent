@@ -8,10 +8,16 @@ async function createRoom(room: CreateRoomParams) {
   return result;
 }
 
+async function getRoomById(id: number) {
+  const result = await roomRepository.getRoomById(id);
+  return result;
+}
+
 export type CreateRoomParams = Omit<Room, "id" | "createdAt" | "updatedAt">
 
 const roomService = {
-  createRoom
+  createRoom,
+  getRoomById
 };
 
 export default roomService;

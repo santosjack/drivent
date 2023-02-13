@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticateToken, validateBody } from "@/middlewares";
 import { createRoomSchema } from "@/schemas/room-schemas";
-import { createRoom } from "@/controllers/rooms-controler";
+import { createRoom } from "@/controllers/rooms-controller";
 
 const roomsRouter = Router();
 

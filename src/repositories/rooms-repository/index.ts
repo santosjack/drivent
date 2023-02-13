@@ -9,10 +9,19 @@ async function createRoom(room: CreateRoomParams) {
   });
 }
 
+async function getRoomById(id: number) {
+  return prisma.room.findFirst({
+    where: {
+      id: id
+    }
+  });
+}
+
 export type CreateRoomParams = Omit<Room, "id" | "createdAt" | "updatedAt">
 
 const roomRepository = {
-  createRoom
+  createRoom,
+  getRoomById
 };
 
 export default roomRepository;

@@ -14,3 +14,14 @@ export async function createRoom(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 }
+
+export async function getRoomById(req: AuthenticatedRequest, res: Response) {
+  const id = parseInt(req.params.id);
+  try {
+    const result = await roomService.getRoomById(id);
+  
+    return res.sendStatus(httpStatus.OK).send(result);
+  } catch (error) {
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}
