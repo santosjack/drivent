@@ -5,7 +5,7 @@ import { Room, TicketStatus } from "@prisma/client";
 import httpStatus from "http-status";
 import * as jwt from "jsonwebtoken";
 import supertest from "supertest";
-import { createEnrollmentWithAddress, createHotel, createPayment, createRoomsWithHotelId, createTicket, createTicketType, createUser, generateInvalidRoomId, createBooking } from "../factories";
+import { createEnrollmentWithAddress, createHotel, createRoomsWithHotelId, createTicket, createTicketType, createUser, generateInvalidRoomId, createBooking } from "../factories";
 import { cleanDb, generateValidToken } from "../helpers";
 
 beforeAll(async () => {
